@@ -51,4 +51,16 @@ router.put("/:id", validateActionId, async (req, res) => {
   }
 });
 
+router.delete("/:id", validateActionId, async (req, res) => {
+  try {
+    const result = await actionDB.remove(req.action.id);
+    if (!result)
+      return res.status(400).json({ message: "Unable to delete that." });
+
+    res.json({ message: "Deleted." });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
