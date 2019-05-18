@@ -1,4 +1,5 @@
 const actionDB = require("../data/helpers/actionModel");
+const projectDB = require("../data/helpers/projectModel");
 
 const validateActionId = async (req, res, next) => {
   const { id } = req.params;
@@ -24,11 +25,17 @@ const validateAction = async (req, res, next) => {
       message: "An action requires a project_id, description, and notes."
     });
 
+  const project = await projectDB.get(project_id);
+
+  if (!project || Object.keys(project).length < 1)
+    return res.status(400).json({ message: "No such project." });
+
   req.action = req.body;
 
   next();
 };
 
 module.exports = {
-  validateActionId
+  validateActionId,
+  validateAction
 };
