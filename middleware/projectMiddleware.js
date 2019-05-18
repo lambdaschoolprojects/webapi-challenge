@@ -18,6 +18,17 @@ const validateProjectId = async (req, res, next) => {
     next();
 }
 
+const validateProjectBody = (req, res, next) => {
+    const { name, description } = req.body;
+
+    if (!name || !description) return res.status(400).json({ message: "Name and description are both required"});
+
+    req.project = { name, description };
+
+    next();
+}
+
 module.exports = {
-    validateProjectId
+    validateProjectId,
+    validateProjectBody
 }
