@@ -38,5 +38,17 @@ router.put('/:id', validateProjectId, async (req, res) => {
     }
 })
 
+router.delete('/:id', validateProjectId, async (req, res) => {
+    try {
+        const result = await projectDB.remove(req.project.id);
+
+        if(!result) return res.status(400).json({ message: "Could not delete the project."});
+
+        res.status(200).json(result);
+    } catch(err) {
+        res.status(500).json(err);
+    }
+});
+
 
 module.exports = router;
