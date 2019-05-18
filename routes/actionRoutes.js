@@ -21,5 +21,9 @@ router.get('/:id', validateActionId, (req, res) => {
     res.json(req.action);
 });
 
+router.post('/', (req, res) => {
+
+});
+
 
 module.exports = router;
