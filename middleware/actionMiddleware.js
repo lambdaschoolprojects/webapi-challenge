@@ -20,11 +20,13 @@ const validateAction = async (req, res, next) => {
   const { project_id, description, notes } = req.body;
 
   if (!project_id || !description || !notes)
-    return res
-      .status(400)
-      .json({
-        message: "An action requires a project_id, description, and notes."
-      });
+    return res.status(400).json({
+      message: "An action requires a project_id, description, and notes."
+    });
+
+  req.action = req.body;
+
+  next();
 };
 
 module.exports = {
