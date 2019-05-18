@@ -3,7 +3,8 @@ const actionDB = require('../data/helpers/actionModel');
 const validateActionId = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const action = actionDB.get(id);
+        const action = await actionDB.get(id);
+
         if(!action || Object.keys(action).length < 1) return res.status(400).json({ message: "Could not find that action."});
 
         req.action = action;

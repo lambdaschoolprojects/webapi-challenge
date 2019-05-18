@@ -1,6 +1,8 @@
 const express = require('express');
 const actionDB = require('../data/helpers/actionModel');
 
+const { validateActionId } = require('../middleware/actionMiddleware');
+
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -13,7 +15,11 @@ router.get('/', async (req, res) => {
     } catch(err) {
         res.status(500).json(err);
     }
-})
+});
+
+router.get('/:id', validateActionId, (req, res) => {
+    res.json(req.action);
+});
 
 
 module.exports = router;
