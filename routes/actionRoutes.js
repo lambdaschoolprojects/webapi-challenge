@@ -38,4 +38,17 @@ router.post("/", validateAction, async (req, res) => {
   }
 });
 
+router.put("/:id", validateActionId, async (req, res) => {
+  try {
+    const action = await actionDB.update(req.action.id, req.body);
+
+    if (!action || Object.keys(action).length < 1)
+      return res.status(400).json({ message: "Unable to update action." });
+
+    res.json(action);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
